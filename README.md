@@ -4,8 +4,7 @@
 ```bash
 pkg update
 pkg install wget -y
-wget
-mv tbot $PREFIX/bin/
+wget -O $PREFIX/bin/tbot https://raw.githubusercontent.com/TecnicalBot/tbot/main/tbot.sh
 chmod +x $PREFIX/bin/tbot
 ```
 
