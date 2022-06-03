@@ -268,16 +268,15 @@ install_l3mon(){
 	sleep 18
 	pm2 stop index
 	sleep 18
-	pm2 startup
-	sleep 18
 	read -p "Create your password: " password
 	md5pass=$(echo -n $password | md5sum | sed 's/  \-//')
 	sed -i -e 's/"password": "",/"password": "'"$md5pass"'",/g' $HOME/l3mon/maindb.json
 	pm2 restart all
 	sleep 18
 	echo
-	echo ${G} "[*] Installation completed"
-	echo "[*] Your Username is 'admin' \n and Password is $password"
+        echo ${G} "[*] Installation completed"
+	echo "[*] Your Username is 'admin'"
+        echo "[*] and Password is $password"
 	echo
 }
 
