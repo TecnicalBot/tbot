@@ -48,8 +48,10 @@ echo "[10] Sherlock"
 echo
 echo "[11] John The Ripper"
 echo
-echo "[12] Cupp"${W}
+echo "[12] Cupp"
 echo 
+echo "[13] L3MON"${W}
+echo
 
 read -p ${Y}"Select option: "${W} user_input
 echo
@@ -246,6 +248,37 @@ install_phonesploit(){
 }
 
 
+install_l3mon(){
+	pkg update -y
+	pkg install openjdk-17 nodejs wget -y
+	npm install -g npm@6.14.17
+	npm install pm2 -g
+	LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/D3VL/L3MON/releases/latest)
+	LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+	DOWNLOAD_L3MON="https://github.com/D3VL/L3MON/releases/download/$LATEST_VERSION/L3MON-v$LATEST_VERSION.zip"
+
+	mkdir $HOME/l3mon
+	cd $HOME/l3mon
+	wget $DOWNLOAD_L3MON
+	unzip L3MON-v$LATEST_VERSION.zip
+	cd $HOME/l3mon
+	npm install
+	sleep 5
+	pm2 start index.js
+	sleep 10
+	pm2 stop index
+	sleep 8
+	echo
+	read -p "Create User: " user
+	sed -i 's/admin/'$user'/g' $HOME/l3mon/maindb.json
+	echo
+	read -p "Create your password: " password
+	md5pass=$(echo -n $password | md5sum | sed 's/  \-//')
+	sed -i -e 's/"password": "",/"password": "'"$md5pass"'",/g' $HOME/l3mon/maindb.json
+	echo
+	echo ${G} "[*] Installation completed"
+}
+
 
 if [[ $user_input == "1" ]]; then
 	echo ${G}"[*] Installing Beef..."${W}
@@ -295,6 +328,10 @@ elif [[ $user_input == "12" ]]; then
         echo ${G}"[*] Installing Cupp..."${W}
         echo
         install_cupp
+elif [[ $user_input == "13" ]]; then
+        echo ${G}"[*] Installing L3MON..."${W}
+        echo
+        install_l3mon
 else
 	echo ${R}"[*] Error, Select a option from the above list"${W}
 	echo
