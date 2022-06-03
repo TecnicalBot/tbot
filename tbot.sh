@@ -275,7 +275,7 @@ install_l3mon(){
 	sleep 18
 	echo
         echo ${G} "[*] Installation completed"
-	echo "[*] Your Username is 'admin'"
+	echo "[*] Your Username is admin"
         echo "[*] and Password is $password"
 	echo
 }
