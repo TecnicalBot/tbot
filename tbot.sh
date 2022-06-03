@@ -268,6 +268,9 @@ install_l3mon(){
 	sleep 10
 	pm2 stop index
 	sleep 8
+	pm2 startup
+	sleep 8
+	
 	echo
 	read -p "Create User: " user
 	sed -i 's/admin/'$user'/g' $HOME/l3mon/maindb.json
@@ -275,8 +278,11 @@ install_l3mon(){
 	read -p "Create your password: " password
 	md5pass=$(echo -n $password | md5sum | sed 's/  \-//')
 	sed -i -e 's/"password": "",/"password": "'"$md5pass"'",/g' $HOME/l3mon/maindb.json
+	pm2 restart all
+	sleep 8
 	echo
 	echo ${G} "[*] Installation completed"
+	termux-open-url http://localhost:22533
 }
 
 
