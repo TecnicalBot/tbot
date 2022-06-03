@@ -263,26 +263,22 @@ install_l3mon(){
 	unzip L3MON-v$LATEST_VERSION.zip
 	cd $HOME/l3mon
 	npm install
-	sleep 5
+	sleep 18
 	pm2 start index.js
-	sleep 10
+	sleep 18
 	pm2 stop index
-	sleep 8
+	sleep 18
 	pm2 startup
-	sleep 8
-	
-	echo
-	read -p "Create User: " user
-	sed -i 's/admin/'$user'/g' $HOME/l3mon/maindb.json
-	echo
+	sleep 18
 	read -p "Create your password: " password
 	md5pass=$(echo -n $password | md5sum | sed 's/  \-//')
 	sed -i -e 's/"password": "",/"password": "'"$md5pass"'",/g' $HOME/l3mon/maindb.json
 	pm2 restart all
-	sleep 8
+	sleep 18
 	echo
 	echo ${G} "[*] Installation completed"
-	termux-open-url http://localhost:22533
+	echo "[*] Your Username is 'admin' \n and Password is $password"
+	echo
 }
 
 
