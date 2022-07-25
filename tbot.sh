@@ -50,8 +50,9 @@ echo "[11] John The Ripper"
 echo
 echo "[12] Cupp"
 echo 
-echo "[13] L3MON"${W}
+echo "[13] L3MON"
 echo
+echo "[14] SEToolkit"${W}
 
 read -p ${Y}"Select option: "${W} user_input
 echo
@@ -71,6 +72,36 @@ get_arch() {
             ;;
     esac
 }
+
+install_setoolkit(){
+	get_arch
+	echo
+	echo
+	if [[ $SYS_ARCH == "arm64" ]]; then
+	pkg update -y 
+	pkg install -y wget python build-essential cmake git binutils rust libjpeg-turbo proot fakeroot
+	export CARGO_BUILD_TARGET=aarch64-linux-android
+	pip3 install cryptography --no-binary cryptography
+	pip3 install cython wheel
+	LDFLAGS="-L/system/lib64/" CFLAGS="-I/data/data/com.termux/files/usr/include/" pip3 install Pillow
+	cd ; wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.2.tar.gz
+	tar -xzf freetds-1.2.tar.gz ; cd freetds-1.2
+	./configure --prefix=$PREFIX ; make ; make install ; cd
+	pip3 install pymssql
+	git clone https://github.com/trustedsec/social-engineer-toolkit ; cd social-engineer-toolkit
+	sed -i 's/local//g' setup.py
+	termux-chroot
+	sleep 4
+	python3 setup.py
+	exit
+	echo ${G}"[*] Installation completed..."
+	echo "[*] To use setoolkit, first you need to execute 'termux-chroot' then 'fakeroot' and after that you can start SEToolkit executing 'setoolkit'"${W}
+	echo
+	else
+	   echo ${R}"[*] Sorry, Your device architecture is not supported"${W}
+	fi
+}
+
 
 
 install_beef(){
@@ -333,6 +364,10 @@ elif [[ $user_input == "13" ]]; then
         echo ${G}"[*] Installing L3MON..."${W}
         echo
         install_l3mon
+elif [[ $user_input == "14" ]]; then
+        echo ${G}"[*] Installing SEToolkit..."${W}
+        echo
+        install_setoolkit
 else
 	echo ${R}"[*] Error, Select a option from the above list"${W}
 	echo
