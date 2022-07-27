@@ -87,10 +87,10 @@ install_setoolkit(){
 	LDFLAGS="-L/system/lib64/" CFLAGS="-I/data/data/com.termux/files/usr/include/" pip3 install Pillow
 	cd ; wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.2.tar.gz
 	tar -xzf freetds-1.2.tar.gz ; cd freetds-1.2
-	./configure --prefix=$PREFIX ; make ; make install ; cd
-	pip3 install pymssql
+	./configure --prefix=$PREFIX ; sleep 10 ;  make ; sleep 10 ; make install ; sleep 5 ; cd
+	pip3 install pymssql ; sleep 5
 	git clone https://github.com/trustedsec/social-engineer-toolkit ; cd social-engineer-toolkit
-	sed -i 's/local//g' setup.py
+	sed -i 's/local//g' setup.py ; sleep 4
 	termux-chroot
 	sleep 4
 	python3 setup.py
