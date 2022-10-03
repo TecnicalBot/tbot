@@ -120,7 +120,7 @@ install_setoolkit(){
 
 install_beef(){
 	pkg update
-	pkg install curl git libyaml libxslt bison espeak ruby python nodejs nano -y
+	pkg install curl git libyaml libxslt bison espeak ruby python nodejs nano binutils -y
 	cd $PREFIX/opt
 	git clone https://github.com/beefproject/beef
 	cd $PREFIX/opt/beef
