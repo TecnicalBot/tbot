@@ -1,5 +1,5 @@
 # Termux Tools Installer
-![Metasploit 6 running](https://github.com/TecnicalBot/tbot/blob/main/images/tbot.png)
+![tbot](https://github.com/TecnicalBot/tbot/blob/main/images/tbot.png)
 
 
 ### Installation
