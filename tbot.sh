@@ -39,8 +39,7 @@ echo "[10] Sherlock"
 echo "[11] John The Ripper"
 echo "[12] Cupp"
 echo "[13] L3MON"
-echo "[14] SEToolkit"
-echo "[15] Hydra"${W}
+echo "[14] Hydra"${W}
 echo
 read -p ${Y}"Select option: "${W} user_input
 echo
@@ -78,48 +77,6 @@ install_hydra(){
 	echo ${G}"Installation Complete"${W}
 	echo
 }
-install_setoolkit(){
-	get_arch
-	echo
-	echo
-	if [[ $SYS_ARCH == "arm64" ]]; then
-	pkg update -y 
-	pkg install -y wget python build-essential cmake git binutils rust libjpeg-turbo proot fakeroot
-	export CARGO_BUILD_TARGET=aarch64-linux-android
-	sleep 4
-	pip3 install cryptography --no-binary cryptography
-	sleep 5
-	pip3 install cython wheel
-	sleep 5
-	LDFLAGS="-L/system/lib64/" CFLAGS="-I/data/data/com.termux/files/usr/include/" pip3 install Pillow
-	sleep 5
-	cd ; wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.2.tar.gz
-	tar -xzf freetds-1.2.tar.gz ; cd freetds-1.2
-	./configure --prefix=$PREFIX 
-	sleep 10
-	make
-	sleep 10
-	make install
-	sleep 5
-	cd
-	pip3 install pymssql 
-	sleep 5
-	git clone https://github.com/trustedsec/social-engineer-toolkit ; cd social-engineer-toolkit
-	sleep 2
-	sed -i 's/local//g' setup.py
-	sleep 4
-	termux-chroot
-	sleep 4
-	python3 setup.py
-	exit
-	echo ${G}"[*] Installation completed..."
-	echo "[*] To use setoolkit, first you need to execute 'termux-chroot' then 'fakeroot' and after that you can start SEToolkit executing 'setoolkit'"${W}
-	echo
-	else
-	   echo ${R}"[*] Sorry, Your device architecture is not supported"${W}
-	fi
-}
-
 
 
 install_beef(){
@@ -158,11 +115,12 @@ install_metasploit(){
 
 install_routersploit(){
 	get_arch
+	printf get_arch
 	echo
 	echo
 	if [[ $SYS_ARCH == "arm64" ]]; then
 	pkg update 
-	pkg install git python rust libsodium -y
+	pkg install git python rust libsodium python-crypto -y
 	cd $PREFIX/opt
 	git clone https://github.com/threat9/routersploit
 	cd $PREFIX/opt/routersploit
@@ -183,11 +141,12 @@ install_routersploit(){
 
 install_mitmproxy(){
 	get_arch
+	printf get_arch
         echo
         echo
         if [[ $SYS_ARCH == "arm64" ]]; then
 	pkg update
-	pkg install python rust -y
+	pkg install python rust python-crypto -y
 	export CARGO_BUILD_TARGET=aarch64-linux-android
 	pip install cryptography --no-binary cryptography 
 	pip3 install mitmproxy
@@ -209,11 +168,12 @@ install_netcat(){
 
 install_ghost(){
 	get_arch
+	printf get_arch
         echo
         echo
         if [[ $SYS_ARCH == "arm64" ]]; then
 	pkg update
-	pkg install git python rust -y
+	pkg install git python rust python-crypto -y
 	export CARGO_BUILD_TARGET=aarch64-linux-android
 	pip install cryptography --no-binary cryptography
 	pip3 install git+https://github.com/EntySec/Ghost
