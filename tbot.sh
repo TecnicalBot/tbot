@@ -86,7 +86,7 @@ install_beef(){
 	git clone https://github.com/beefproject/beef
 	cd $PREFIX/opt/beef
 	echo " gem 'net-smtp', require: false" >> Gemfile
-	sed -i '264d' install
+	sed -i '279d' install
 	sed -i 's/sudo//' install
 	bash install
 	echo "cd $PREFIX/opt/beef && ruby beef" >> $PREFIX/bin/beef
