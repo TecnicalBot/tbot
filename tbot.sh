@@ -86,7 +86,7 @@ install_beef(){
 	git clone https://github.com/beefproject/beef
 	cd $PREFIX/opt/beef
 	echo " gem 'net-smtp', require: false" >> Gemfile
-	sed -i '279d' install
+	sed -i '280d' install
 	sed -i 's/sudo//' install
 	bash install
 	echo "cd $PREFIX/opt/beef && ruby beef" >> $PREFIX/bin/beef
@@ -120,7 +120,7 @@ install_routersploit(){
 	echo
 	if [[ $SYS_ARCH == "arm64" ]]; then
 	pkg update 
-	pkg install git python rust libsodium python-crypto -y
+	pkg install git python rust libsodium python-cryptography -y
 	cd $PREFIX/opt
 	git clone https://github.com/threat9/routersploit
 	cd $PREFIX/opt/routersploit
@@ -146,7 +146,7 @@ install_mitmproxy(){
         echo
         if [[ $SYS_ARCH == "arm64" ]]; then
 	pkg update
-	pkg install python rust python-crypto -y
+	pkg install python rust python-cryptography -y
 	export CARGO_BUILD_TARGET=aarch64-linux-android
 	pip install cryptography --no-binary cryptography 
 	pip3 install mitmproxy
@@ -173,7 +173,7 @@ install_ghost(){
         echo
         if [[ $SYS_ARCH == "arm64" ]]; then
 	pkg update
-	pkg install git python rust python-crypto -y
+	pkg install git python rust python-cryptography -y
 	export CARGO_BUILD_TARGET=aarch64-linux-android
 	pip install cryptography --no-binary cryptography
 	pip3 install git+https://github.com/EntySec/Ghost
